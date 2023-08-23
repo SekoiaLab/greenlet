@@ -1,0 +1,1 @@
+`gdb -batch -ex "run" -ex "bt" -ex "quit" --args <PUT ENTRYPOINT HERE>`

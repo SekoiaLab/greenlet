@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <exception>
 
-
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h" // PyMemberDef
@@ -1101,6 +1100,7 @@ MainGreenlet::g_switch()
         throw;
     }
 
+
     switchstack_result_t err = this->g_switchstack();
     if (err.status < 0) {
         // XXX: This code path is untested.
@@ -2171,6 +2171,7 @@ PyDoc_STRVAR(
 static PyObject*
 green_switch(PyGreenlet* self, PyObject* args, PyObject* kwargs)
 {
+    printf("switching to greenlet\n");
     using greenlet::SwitchingArgs;
     SwitchingArgs switch_args(OwnedObject::owning(args), OwnedObject::owning(kwargs));
     self->pimpl->args() <<= switch_args;
@@ -2683,8 +2684,8 @@ PyGreenlet_Switch(PyGreenlet* g, PyObject* args, PyObject* kwargs)
     if (kwargs == NULL || !PyDict_Check(kwargs)) {
         kwargs = NULL;
     }
-
-    return green_switch(g, args, kwargs);
+    PyObject* o = green_switch(g, args, kwargs);
+    if(o == nullptr) throw "Stupid NULL pointer"
 }
 
 static PyObject*
