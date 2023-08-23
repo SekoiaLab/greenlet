@@ -2210,6 +2210,7 @@ green_switch(PyGreenlet* self, PyObject* args, PyObject* kwargs)
         return result.relinquish_ownership();
     }
     catch(const PyErrOccurred&) {
+        printf("GRRR STUPID NULLL !\n");
         return nullptr;
     }
 }
@@ -2685,7 +2686,7 @@ PyGreenlet_Switch(PyGreenlet* g, PyObject* args, PyObject* kwargs)
         kwargs = NULL;
     }
     PyObject* o = green_switch(g, args, kwargs);
-    if(o == nullptr) throw "Stupid NULL pointer"
+    if(o == nullptr) throw "Stupid NULL pointer";
 }
 
 static PyObject*
